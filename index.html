@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بطاقة تواصل - يوسق محمد</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="hero">
+        <div class="avatar">ي م</div>
+        <p class="eyebrow">بطاقة تعريف شخصية</p>
+        <h1>يوسق محمد</h1>
+        <p class="role">Website builder</p>
+      </div>
+
+      <section class="info">
+        <article class="info-item">
+          <span class="label">رقم الهاتف</span>
+          <a href="tel:01507102955" class="value">01507102955</a>
+        </article>
+
+        <article class="info-item">
+          <span class="label">البريد الإلكتروني</span>
+          <a href="mailto:youssefmohammed201175@gmail.com" class="value">youssefmohammed201175@gmail.com</a>
+        </article>
+
+        <article class="info-item">
+          <span class="label">تاريخ الميلاد</span>
+          <span class="value">05 يوليو</span>
+        </article>
+      </section>
+
+      <div class="actions">
+        <button id="saveContactBtn" class="save-button" type="button">حفظ إلى جهات الاتصال</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const vCardContent = `BEGIN:VCARD
+VERSION:3.0
+N:محمد;يوسق;;;
+FN:يوسق محمد
+TEL;TYPE=CELL:01507102955
+EMAIL;TYPE=HOME:youssefmohammed201175@gmail.com
+TITLE:Website builder
+BDAY:--07-05
+END:VCARD
+`;
+
+    const saveContactBtn = document.getElementById("saveContactBtn");
+
+    saveContactBtn.addEventListener("click", () => {
+      const blob = new Blob([vCardContent], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "yousef-mohamed-contact.vcf";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
