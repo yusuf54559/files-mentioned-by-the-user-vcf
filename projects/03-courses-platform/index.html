@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الكورسات التعليمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Violet */
+            --bg: #111827;
+            --surface: #1f2937;
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #374151;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Video Area */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .video-container { background: #000; width: 100%; aspect-ratio: 16/9; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); }
+        .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .play-btn { position: absolute; width: 80px; height: 80px; background: rgba(139, 92, 246, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; transition: transform 0.3s; }
+        .play-btn:hover { transform: scale(1.1); }
+        
+        .course-info { padding: 30px; }
+        .course-info h1 { font-size: 28px; margin-bottom: 10px; }
+        .tabs { display: flex; gap: 30px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .tab { padding: 10px 0; color: var(--text-muted); cursor: pointer; position: relative; font-weight: 600; }
+        .tab.active { color: var(--primary); }
+        .tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--primary); }
+        .tab-content p { color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+        
+        /* Sidebar Modules */
+        .sidebar { width: 350px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); }
+        .progress-container { margin-top: 15px; }
+        .progress-bar { width: 100%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+        .progress-fill { width: 45%; height: 100%; background: var(--primary); }
+        .progress-text { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+        
+        .modules-list { flex: 1; overflow-y: auto; }
+        .module { border-bottom: 1px solid var(--border); }
+        .module-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: rgba(0,0,0,0.1); font-weight: 600; }
+        .lesson { padding: 12px 20px 12px 40px; display: flex; align-items: center; gap: 15px; color: var(--text-muted); cursor: pointer; transition: background 0.2s; }
+        .lesson:hover { background: rgba(139, 92, 246, 0.1); color: var(--text); }
+        .lesson.active { background: rgba(139, 92, 246, 0.2); color: var(--primary); border-right: 3px solid var(--primary); }
+        .lesson-icon { font-size: 14px; }
+        
+        /* Go Back */
+        .back-btn { position: fixed; bottom: 20px; left: 20px; background: var(--surface); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; z-index: 1000; transition: background 0.3s;}
+        .back-btn:hover { background: var(--primary); }
+    </style>
+</head>
+<body>
+    <main class="main-content">
+        <div class="video-container">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Video cover">
+            <div class="play-btn"><i class="fa-solid fa-play" style="margin-left: 5px;"></i></div>
+        </div>
+        
+        <div class="course-info">
+            <h1>برمجة تطبيقات الويب المتقدمة (Full-Stack)</h1>
+            <div class="tabs">
+                <div class="tab active">نظرة عامة</div>
+                <div class="tab">الملفات المرفقة</div>
+                <div class="tab">الأسئلة والنقاشات</div>
+                <div class="tab">الشهادة</div>
+            </div>
+            <div class="tab-content">
+                <p>في هذا الدرس سنتعلم كيفية بناء واجهات مستخدم معقدة باستخدام HTML, CSS, JavaScript مع ربطها بقواعد البيانات لإنشاء تطبيق متكامل. سنركز على الـ OOP والتصميم المتجاوب.</p>
+                <button style="background: var(--surface); color: white; border: 1px solid var(--border); padding: 10px 20px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-download"></i> تحميل ملخص الدرس PDF</button>
+            </div>
+        </div>
+    </main>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>محتوى الكورس</h3>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    <span>مكتمل 45%</span>
+                    <span>12/28 درس</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modules-list">
+            <div class="module">
+                <div class="module-header">
+                    <span>1. مقدمة في الـ Web</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="lesson"><i class="fa-regular fa-circle-check" style="color: #10b981;"></i> <span>تهيئة بيئة العمل</span></div>
+                <div class="lesson"><i class="fa-regular fa-circle-check" style="color: #10b981;"></i> <span>أساسيات المتصفح</span></div>
+            </div>
+            
+            <div class="module">
+                <div class="module-header">
+                    <span>2. بناء الواجهات الأمامية</span>
+                    <i class="fa-solid fa-chevron-up"></i>
+                </div>
+                <div class="lesson active"><i class="fa-solid fa-circle-play lesson-icon"></i> <span>تصميم التخطيط (Layouts)</span></div>
+                <div class="lesson"><i class="fa-solid fa-lock lesson-icon"></i> <span>الأنيميشن المتقدم</span></div>
+                <div class="lesson"><i class="fa-solid fa-lock lesson-icon"></i> <span>مشاريع عملية</span></div>
+            </div>
+            
+            <div class="module">
+                <div class="module-header">
+                    <span>3. اختبارات الكورس</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="lesson"><i class="fa-solid fa-file-pen lesson-icon"></i> <span>الاختبار النصفي</span></div>
+            </div>
+        </div>
+    </aside>
+
+    <a href="../../index.html" class="back-btn">العودة للبرتفوليو <i class="fa-solid fa-arrow-left"></i></a>
+</body>
+</html>

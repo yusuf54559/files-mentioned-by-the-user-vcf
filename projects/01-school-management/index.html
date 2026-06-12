@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المدرسة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --border: #edf2f4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Sidebar */
+        .sidebar { width: 260px; background: var(--surface); border-left: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 40px; text-align: center; }
+        .nav-link { display: flex; align-items: center; gap: 15px; padding: 12px 20px; color: var(--text-light); text-decoration: none; border-radius: 8px; margin-bottom: 10px; transition: all 0.3s; font-weight: 600; }
+        .nav-link:hover, .nav-link.active { background: var(--primary); color: white; }
+        
+        /* Main Content */
+        .main { flex: 1; padding: 30px; overflow-y: auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .search-bar { background: var(--surface); padding: 10px 20px; border-radius: 20px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); width: 300px; }
+        .search-bar input { border: none; outline: none; width: 100%; }
+        .profile { display: flex; align-items: center; gap: 15px; }
+        .profile img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
+        
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 20px; }
+        .stat-icon { width: 60px; height: 60px; border-radius: 12px; background: rgba(67, 97, 238, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .stat-info h4 { color: var(--text-light); font-size: 14px; margin-bottom: 5px; }
+        .stat-info h2 { font-size: 24px; }
+        
+        /* Table */
+        .table-section { background: var(--surface); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: right; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-light); font-weight: 600; }
+        .badge { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge.present { background: rgba(76, 201, 240, 0.2); color: var(--success); }
+        .badge.absent { background: rgba(239, 35, 60, 0.2); color: #ef233c; }
+        
+        /* Go Back Button */
+        .back-btn { position: fixed; bottom: 20px; left: 20px; background: var(--text); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo"><i class="fa-solid fa-graduation-cap"></i> EduSys</div>
+        <a href="#" class="nav-link active"><i class="fa-solid fa-house"></i> لوحة التحكم</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-users"></i> الطلاب (التسجيل)</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-chalkboard-user"></i> المدرسين</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-clipboard-user"></i> الحضور والانصراف</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-star"></i> الدرجات</a>
+        <a href="#" class="nav-link" style="margin-top: auto;"><i class="fa-solid fa-gear"></i> الإعدادات (الصلاحيات)</a>
+    </aside>
+
+    <main class="main">
+        <header>
+            <div class="search-bar">
+                <i class="fa-solid fa-search text-light"></i>
+                <input type="text" placeholder="ابحث عن طالب، مدرس...">
+            </div>
+            <div class="profile">
+                <div style="text-align: left;">
+                    <h4>أحمد محمد</h4>
+                    <span style="font-size: 12px; color: var(--text-light);">مدير النظام (Admin)</span>
+                </div>
+                <img src="https://i.pravatar.cc/150?img=11" alt="Profile">
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info">
+                    <h4>إجمالي الطلاب</h4>
+                    <h2>1,250</h2>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: #f72585; background: rgba(247, 37, 133, 0.1);"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <div class="stat-info">
+                    <h4>إجمالي المدرسين</h4>
+                    <h2>85</h2>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: #4cc9f0; background: rgba(76, 201, 240, 0.1);"><i class="fa-solid fa-clipboard-check"></i></div>
+                <div class="stat-info">
+                    <h4>نسبة الحضور اليوم</h4>
+                    <h2>94%</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <h3>سجل الحضور والدرجات (اليوم)</h3>
+                <button style="padding: 8px 15px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;">إضافة سجل +</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اسم الطالب</th>
+                        <th>المرحلة</th>
+                        <th>حالة الحضور</th>
+                        <th>آخر درجة (رياضيات)</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>يوسف علي</td>
+                        <td>الصف الثالث الثانوي</td>
+                        <td><span class="badge present">حاضر</span></td>
+                        <td>98%</td>
+                        <td><i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-light); cursor: pointer;"></i></td>
+                    </tr>
+                    <tr>
+                        <td>سارة أحمد</td>
+                        <td>الصف الأول الثانوي</td>
+                        <td><span class="badge absent">غائب</span></td>
+                        <td>85%</td>
+                        <td><i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-light); cursor: pointer;"></i></td>
+                    </tr>
+                    <tr>
+                        <td>عمر خالد</td>
+                        <td>الصف الثاني الثانوي</td>
+                        <td><span class="badge present">حاضر</span></td>
+                        <td>92%</td>
+                        <td><i class="fa-solid fa-ellipsis-vertical" style="color: var(--text-light); cursor: pointer;"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <a href="../../index.html" class="back-btn">العودة للبرتفوليو <i class="fa-solid fa-arrow-left"></i></a>
+</body>
+</html>

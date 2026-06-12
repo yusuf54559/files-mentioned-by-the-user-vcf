@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المستشفى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --primary: #ef4444; /* Red */
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+        .sidebar { width: 260px; background: var(--surface); border-left: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
+        .logo { font-size: 22px; color: var(--primary); font-weight: 700; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        .nav-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 8px; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { background: rgba(239, 68, 68, 0.1); color: var(--primary); }
+
+        .main { flex: 1; padding: 30px; overflow-y: auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .emergency-btn { background: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; border: none; font-weight: 700; font-size: 16px; cursor: pointer; animation: pulse 2s infinite; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--surface); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+        .stat-card h4 { color: var(--text-muted); font-size: 14px; margin-bottom: 10px; }
+        .stat-card .value { font-size: 28px; font-weight: 700; }
+        
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        .panel { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); padding: 20px; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: right; }
+        th, td { padding: 12px 10px; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-muted); font-size: 14px; }
+        .status { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .status.critical { background: rgba(239, 68, 68, 0.2); color: var(--primary); }
+        .status.stable { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        
+        .timeline-item { display: flex; gap: 15px; margin-bottom: 20px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; right: 4px; top: 20px; bottom: -20px; width: 2px; background: var(--border); }
+        .timeline-item:last-child::before { display: none; }
+        .timeline-icon { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; margin-top: 5px; position: relative; z-index: 2; box-shadow: 0 0 0 4px var(--surface); }
+        .timeline-content p { font-size: 14px; }
+        .timeline-content span { font-size: 12px; color: var(--text-muted); }
+
+        .back-btn { position: fixed; bottom: 20px; left: 20px; background: white; color: black; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo"><i class="fa-solid fa-staff-snake"></i> MediCare OS</div>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-heart-pulse"></i> مراقبة المرضى</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-bed"></i> إدارة الغرف والأسرّة</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-user-doctor"></i> طاقم الأطباء</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-vial-virus"></i> نتائج المختبر</a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-file-waveform"></i> التقارير الطبية</a>
+    </aside>
+
+    <main class="main">
+        <header>
+            <h2>العناية المركزة (ICU) - الجناح أ</h2>
+            <button class="emergency-btn"><i class="fa-solid fa-truck-medical"></i> إعلان حالة طوارئ</button>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h4>إجمالي المرضى</h4>
+                <div class="value">142</div>
+            </div>
+            <div class="stat-card">
+                <h4>الأسرة المتاحة</h4>
+                <div class="value" style="color: var(--success);">18</div>
+            </div>
+            <div class="stat-card">
+                <h4>حالات حرجة</h4>
+                <div class="value" style="color: var(--primary);">7</div>
+            </div>
+            <div class="stat-card">
+                <h4>عمليات اليوم</h4>
+                <div class="value" style="color: var(--warning);">12</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>حالة المرضى الحاليين</h3>
+                    <i class="fa-solid fa-ellipsis" style="color: var(--text-muted);"></i>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الغرفة</th>
+                            <th>اسم المريض</th>
+                            <th>التشخيص</th>
+                            <th>الطبيب المعالج</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>101</td>
+                            <td>أحمد محمود</td>
+                            <td>قصور في عضلة القلب</td>
+                            <td>د. رامي</td>
+                            <td><span class="status critical">حرج جداً</span></td>
+                        </tr>
+                        <tr>
+                            <td>102</td>
+                            <td>سارة إبراهيم</td>
+                            <td>استئصال الزائدة</td>
+                            <td>د. هدى</td>
+                            <td><span class="status stable">مستقر</span></td>
+                        </tr>
+                        <tr>
+                            <td>103</td>
+                            <td>يوسف حسن</td>
+                            <td>كسر مضاعف</td>
+                            <td>د. طارق</td>
+                            <td><span class="status stable">مستقر</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>سجل الملاحظات الأخير</h3>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon"></div>
+                        <div class="timeline-content">
+                            <p>انخفاض ضغط الدم للمريض بغرفة 101</p>
+                            <span>منذ 5 دقائق</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: var(--success);"></div>
+                        <div class="timeline-content">
+                            <p>خروج المريض خالد من العناية المركزة</p>
+                            <span>منذ 30 دقيقة</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: var(--warning);"></div>
+                        <div class="timeline-content">
+                            <p>وصول نتائج مختبر الدم للجناح ب</p>
+                            <span>منذ ساعة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <a href="../../index.html" class="back-btn">العودة للبرتفوليو <i class="fa-solid fa-arrow-left"></i></a>
+</body>
+</html>
